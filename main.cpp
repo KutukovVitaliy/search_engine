@@ -7,6 +7,8 @@ int main() {
     std::cout << "ResponsesLimit = " << json.GetResponsesLimit() << std::endl;
     for(auto el : res)
         std::cout << el << std::endl;
-
+    res = json.GetRequests();
+    for(auto el : res)
+        std::cout << el << std::endl;
     return 0;
 }

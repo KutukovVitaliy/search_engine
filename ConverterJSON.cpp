@@ -36,7 +36,11 @@ std::vector<std::string> ConverterJSON::GetTextDocuments()
     }
     return result;
 }
-
+/**
+   * Метод считывает поле max_responses для определения предельного
+   * количества ответов на один запрос
+   * @return
+   */
 int ConverterJSON::GetResponsesLimit()
 {
     std::ifstream configFile("../config.json"), tmpFile;
@@ -48,4 +52,33 @@ int ConverterJSON::GetResponsesLimit()
     configFile.close();
     if(configJson["config"].empty()) throw std::invalid_argument("Config file is empty!");
     return configJson["config"].value("max_responses", 0);
+}
+/**
+   * Метод получения запросов из файла requests.json
+   * @return возвращает список запросов из файла requests.json
+   */
+std::vector<std::string> ConverterJSON::GetRequests()
+{
+    std::ifstream requestsFile("../requests.json");
+    std::string tmpString;
+    if(!requestsFile.is_open()) throw std::invalid_argument("requests file is missing!");
+    std::vector<std::string> result;
+    nlohmann::json requestsJson;
+    requestsFile >> requestsJson;
+    requestsFile.close();
+    if(requestsJson["requests"].empty()) throw std::invalid_argument("requests file is empty!");
+    for(auto it = requestsJson["requests"].begin(); it != requestsJson["requests"].end(); ++it)
+    {
+        tmpString = it.value();
+        result.emplace_back(tmpString);
+    }
+    return result;
+}
+
+/**
+   * Положить в файл answers.json результаты поисковых запросов
+   */
+void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers)
+{
+
 }

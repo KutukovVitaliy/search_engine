@@ -78,7 +78,47 @@ std::vector<std::string> ConverterJSON::GetRequests()
 /**
    * Положить в файл answers.json результаты поисковых запросов
    */
-void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers)
+void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> answers)
 {
+    if(answers.empty()) return;
+    int num = 1;
+    std::string requestNum;
+    std::ofstream answersFile;
+    answersFile.open("../answers.json",std::ios::out);
+    nlohmann::json answersJson;
+    if(answersFile.is_open())
+    {
 
+        for(auto &req : answers)
+        {
+            requestNum = "request" + std::to_string(num++);
+
+            if(req.size() == 1)
+            {
+                if(req.at(0).first == 0 && req.at(0).second == 0)
+                {
+                    answersJson["answers"][requestNum].emplace("result", "false");
+                }
+                else
+                {
+                    answersJson["answers"][requestNum].emplace("result", "true");
+                    nlohmann::json tempJson ;
+                    tempJson.push_back({{"docid", req.at(0).first}, {"rank", req.at(0).second}});
+                    answersJson["answers"][requestNum].emplace("relevance", tempJson);
+                }
+            }
+            else
+            {
+                answersJson["answers"][requestNum].emplace("result", "true");
+                nlohmann::json tempJson ;
+                for(auto vec : req)
+                {
+                    tempJson.push_back({{"docid",vec.first},{"rank",vec.second}});
+                }
+                answersJson["answers"][requestNum].emplace("relevance",tempJson);
+            }
+        }
+    }
+    answersFile << answersJson;
+    answersFile.close();
 }

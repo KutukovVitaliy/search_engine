@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 
 add_subdirectory(nlohmann_json)
-add_executable(search_engine main.cpp ConverterJSON.cpp ConverterJSON.h)
+add_executable(search_engine main.cpp ConverterJSON.cpp ConverterJSON.h InvertedIndex.cpp InvertedIndex.h)
 target_link_libraries(search_engine PRIVATE nlohmann_json::nlohmann_json)
 #target_link_libraries(search_engine PRIVATE gtest_main)
 #gtest_discover_tests(search_engine)

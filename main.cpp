@@ -3,21 +3,18 @@
 #include <vector>
 #include <fstream>
 #include "nlohmann/json.hpp"
-/*#include "gtest/gtest.h"
-TEST(sample_test_case, sample_test)
+//#include "gtest/gtest.h"
+#include "InvertedIndex.h"
+
+/*TEST(sample_test_case, sample_test)
 {
     EXPECT_EQ(1, 1);
 }*/
+
 int main() {
-    ConverterJSON json;
-    /*std::vector<std::string> res = json.GetTextDocuments();
-    std::cout << "ResponsesLimit = " << json.GetResponsesLimit() << std::endl;
-    for(auto el : res)
-        std::cout << el << std::endl;
-    res = json.GetRequests();
-    for(auto el : res)
-        std::cout << el << std::endl;*/
-    std::vector<std::vector<std::pair<int, float>>> answers = {
+
+
+    /*std::vector<std::vector<std::pair<int, float>>> answers = {
             {
                 {2, 1},
                 {0, 0.70f},
@@ -28,7 +25,17 @@ int main() {
             }
     };
 
-    json.putAnswers(answers);
+    json.putAnswers(answers);*/
 
+    InvertedIndex invIndex;
+    std::string word = "milk";
+
+    invIndex.docs.emplace_back("milk sugar salt");
+    invIndex.docs.emplace_back("milk a milk b milk c milk d e milk");
+
+    for(auto &el : invIndex.GetWordCount(word))
+    {
+        std::cout << el.doc_id << " : " << el.count << std::endl;
+    }
     return 0;
 }

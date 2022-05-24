@@ -88,10 +88,11 @@ void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> a
     nlohmann::json answersJson;
     if(answersFile.is_open())
     {
-
+        char buf[4] = {0};
         for(auto &req : answers)
         {
-            requestNum = "request" + std::to_string(num++);
+            std::sprintf(buf, "%03d", num++);
+            requestNum = "request" + std::string(buf);
 
             if(req.size() == 1)
             {

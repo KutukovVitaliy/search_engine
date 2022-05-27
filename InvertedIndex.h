@@ -8,6 +8,9 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <sstream>
+#include <thread>
+#include <mutex>
 
 struct Entry {
     size_t doc_id, count;
@@ -33,6 +36,7 @@ public:
 * @return возвращает подготовленный список с частотой слов
 */
     std::vector<Entry> GetWordCount(const std::string& word);
+
 //private:
     std::vector<std::string> docs; // список содержимого документов
     std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный словарь

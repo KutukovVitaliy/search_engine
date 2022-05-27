@@ -26,16 +26,27 @@ int main() {
     };
 
     json.putAnswers(answers);*/
-
+    std::vector<std::string> inputDocs;
     InvertedIndex invIndex;
-    std::string word = "milk";
 
-    invIndex.docs.emplace_back("milk sugar salt");
-    invIndex.docs.emplace_back("milk a milk b milk c milk d e milk");
+    inputDocs.emplace_back("milk sugar salt");
+    inputDocs.emplace_back("milk a milk b milk c milk d e milk");
+    inputDocs.emplace_back("milk a milk b a str str a str");
+    inputDocs.emplace_back("salt c milk d salt str r str");
+    inputDocs.emplace_back("any a peace string bad f dog milk");
+    inputDocs.emplace_back("cat  dad mother sister brother cat milk");
+    inputDocs.emplace_back("dog killer sun string some big boss milk");
 
-    for(auto &el : invIndex.GetWordCount(word))
+    invIndex.UpdateDocumentBase(inputDocs);
+
+    for(auto it : invIndex.freq_dictionary)
     {
-        std::cout << el.doc_id << " : " << el.count << std::endl;
+        std::cout << it.first << " : ";
+        for(auto vecEl : it.second)
+        {
+            std::cout << "{" << vecEl.doc_id << "," << vecEl.count << "} ";
+        }
+        std::cout << std::endl;
     }
     return 0;
 }

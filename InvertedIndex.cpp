@@ -12,25 +12,25 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word)
 {
     std::vector<Entry> entry;
     size_t docNum = 0;
+    size_t count = 0;
+    std::stringstream sStr;
+    std::string  tempStr;
+    std::vector<std::string> vecStr;
     for(auto &doc : docs)
     {
-        size_t count = 0, pos = 0;
-        while(pos != std::string::npos)
-            {
-                pos = doc.find(word, pos);
-                if(pos != std::string::npos)
-                {
-                    count++;
-                    pos++;
-                }
-
-            }
+        sStr << doc;
+        while (sStr >> tempStr) vecStr.emplace_back(tempStr);
+        for(auto &el : vecStr)
+        {
+            if(el == word) count++;
+        }
         if(count > 0)
-            {
-                entry.emplace_back(Entry{docNum, count});
-            }
+            entry.emplace_back(Entry{docNum, count});
         docNum++;
+        count = 0;
+        sStr.clear();
     }
+    if(entry.empty()) entry.emplace_back(Entry{0, 0});
     return entry;
 }
 

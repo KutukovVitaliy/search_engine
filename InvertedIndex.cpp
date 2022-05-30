@@ -29,6 +29,7 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word)
         docNum++;
         count = 0;
         sStr.clear();
+        vecStr.clear();
     }
     if(entry.empty()) entry.emplace_back(Entry{0, 0});
     return entry;

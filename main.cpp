@@ -3,10 +3,10 @@
 #include <vector>
 #include <fstream>
 #include "nlohmann/json.hpp"
-#include "gtest/gtest.h"
+//#include "gtest/gtest.h"
 #include "InvertedIndex.h"
-
-using namespace std;
+#include "SearchServer.h"
+/*using namespace std;
 void TestInvertedIndexFunctionality(
         const vector<string>& docs,
         const vector<string>& requests,
@@ -69,43 +69,47 @@ TEST(TestCaseInvertedIndex, TestBasic) {
                 }
         };
         TestInvertedIndexFunctionality(docs, requests, expected);
-    }
-/*int main() {
+    }*/
+int main() {
 
 
-    /*std::vector<std::vector<std::pair<int, float>>> answers = {
+   /* std::vector<std::vector<std::pair<int, float>>> answers = {
             {
                 {2, 1},
-                {0, 0.70f},
-                {1, 0.30f}
+                {0, 0.7f},
+                {1, 0.3f}
             },
             {
                 {}
             }
     };
-
+    ConverterJSON json;
     json.putAnswers(answers);*/
-   /* std::vector<std::string> inputDocs;
+    std::vector<std::string> inputDocs;
     InvertedIndex invIndex;
 
     inputDocs.emplace_back("milk sugar salt");
     inputDocs.emplace_back("milk a milk b milk c milk d e milk");
-    inputDocs.emplace_back("milk a milk b a str str a str");
-    inputDocs.emplace_back("salt c milk d salt str r str");
-    inputDocs.emplace_back("any a peace string bad f dog milk");
-    inputDocs.emplace_back("cat  dad mother sister brother cat milk");
+    inputDocs.emplace_back("milk a milk b a str str a str c");
+    inputDocs.emplace_back("salt c milk d salt str r a str");
+    inputDocs.emplace_back("any a peace string bad f dog milk c");
+    inputDocs.emplace_back("cat  dad mother sister brother cat  a milk");
     inputDocs.emplace_back("dog killer sun string some big boss milk");
 
     invIndex.UpdateDocumentBase(inputDocs);
 
-    for(auto it : invIndex.freq_dictionary)
+    for(auto it : invIndex.freqDictionary)
     {
         std::cout << it.first << " : ";
         for(auto vecEl : it.second)
         {
-            std::cout << "{" << vecEl.doc_id << "," << vecEl.count << "} ";
+            std::cout << "{" << vecEl.docId << "," << vecEl.count << "} ";
         }
         std::cout << std::endl;
     }
+    SearchServer sServ(invIndex);
+    std::vector<std::string> searchQuery = {"mother apple", "milk a milk", "a str str","str c", "bad f dog", "str", "milk"};
+    sServ.search(searchQuery);
+
     return 0;
-}*/
+}

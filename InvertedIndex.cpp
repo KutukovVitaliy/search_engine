@@ -35,11 +35,11 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word)
     return entry;
 }
 
-void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
+void InvertedIndex::UpdateDocumentBase(std::vector<std::string> inputDocs)
 {
     std::vector<std::thread> threads;
     std::mutex mFreq;
-    docs = input_docs;
+    docs = inputDocs;
     size_t docNum = 0;
     for(auto str : docs)
     {
@@ -67,10 +67,10 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs)
                 }
                 entry.emplace_back(Entry{docNum, count});
                 mFreq.lock();
-                auto it = freq_dictionary.find(*beginIt);
-                if( it == freq_dictionary.end())
+                auto it = freqDictionary.find(*beginIt);
+                if(it == freqDictionary.end())
                 {
-                    freq_dictionary.emplace(std::make_pair(*beginIt, entry));
+                    freqDictionary.emplace(std::make_pair(*beginIt, entry));
                 }
                 else
                 {
